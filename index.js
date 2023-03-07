@@ -2,6 +2,8 @@ import express from "express";
 import path, {dirname} from 'path'
 import { fileURLToPath } from "url";
 import { create } from "express-handlebars";
+import AuthRouter from "./routes/auth.js"
+import ProductRouter from "./routes/products.js"
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -19,16 +21,8 @@ app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 app.set('views', './views');
 
-app.get('/', (req, res) => {
-  res.render('index');
-});
-
-app.get('/about', (req, res) => {
-  res.render('about');
-});
-
-
-
+app.use(AuthRouter)
+app.use(ProductRouter)
 
 
 const PORT = process.env.PORT || 4100;
